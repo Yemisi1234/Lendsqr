@@ -8,6 +8,10 @@ import { FiBell } from 'react-icons/fi';
 import { AiFillCaretDown } from 'react-icons/ai';
 
 const Navbar = () => {
+    const handleSearch = (e) => {
+        e.preventDefault();
+    }
+    
     return (
         <div>
             <div className="nav-container">
@@ -19,7 +23,7 @@ const Navbar = () => {
                 <div className="search-box">
                     <form action="submit" className="input-container">
                         <input type="text" className='search-input' placeholder="Search for anything" />
-                        <button className="search-button"><IoSearch className="search-icon" /></button>
+                        <button className="search-button" onClick={handleSearch}><IoSearch className="search-icon" /></button>
                     </form>
                 </div>
                 <div className="user-nav">
