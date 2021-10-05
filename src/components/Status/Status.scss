@@ -1,0 +1,100 @@
+@import '../variables';
+
+.status-bg-red {
+    background-color: rgba(#e4033b, .05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    border-radius: 30px;
+    width: 70%;
+}
+
+.status-text-red {
+    color: #e4033b;
+    font-size: .8rem;
+}
+
+.status-bg-yellow {
+    background-color: rgba(#e9b200, .05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    border-radius: 30px;
+    width: 70%;
+}
+
+.status-text-yellow {
+    color: #e9b200;
+    font-size: .8rem;
+}
+
+.status-bg-green {
+    background-color: rgba(#50d375, .05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    border-radius: 30px;
+    width: 70%;
+}
+
+.status-text-green {
+    color: #50d375;
+    font-size: .8rem;
+}
+
+.status-bg-black {
+    background-color: rgba(#545f7d, .05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    border-radius: 30px;
+    width: 70%;
+}
+
+.status-text-black {
+    color: #545f7d;
+    font-size: .8rem;
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.status-menu {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.status-dropdown {
+    background-color: $color-white;
+    color: $color-secondary;
+    padding: 1rem;
+    font-size: .8rem;
+    position: absolute;
+    width: 140px;
+    top: 0;
+    right: 20px;
+    z-index: 20;
+    box-shadow: 3px 3px 5px rgba(#000, .02);
+
+    &-status {
+        list-style-type: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin-bottom: .7rem;
+        }
+    }
+}
+
+.status-icon {
+    margin-right: .3rem;
+}
