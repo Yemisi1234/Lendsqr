@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.scss';
-import LendsqrLogo from '../../images/lendsqr-logo.png';
+// import LendsqrLogo from '../../images/lendsqr-logo.png';
 import userPhoto from '../../images/user-photo.jpg';
 import {IoSearch} from 'react-icons/io5';
 import { FiBell } from 'react-icons/fi';
 import { AiFillCaretDown } from 'react-icons/ai';
+import { NavLogo } from '../../images/icons';
 
 const Navbar = () => {
     const handleSearch = (e) => {
@@ -17,7 +18,8 @@ const Navbar = () => {
             <div className="nav-container">
                 <div className="nav-logo">
                     <Link to="/">
-                        <img src={LendsqrLogo} alt="Logo" className="logo-img" />
+                        {/* <img src={LendsqrLogo} alt="Logo" className="logo-img" /> */}
+                        <NavLogo />
                     </Link>
                 </div>
                 <div className="search-box">

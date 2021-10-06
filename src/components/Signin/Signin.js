@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import './Signin.scss';
 import { Link } from 'react-router-dom';
-import LendsqrLogo from '../../images/lendsqr-logo.png';
-// import {ReactComponent as LogoSvg} from '../../images/NavLogo.svg'
+// import LendsqrLogo from '../../images/lendsqr-logo.png';
+import { NavLogo } from '../../images/icons';
 import Artwork from '../../images/artwork.png';
 
 const Signin = () => {
@@ -38,7 +38,8 @@ const Signin = () => {
             <div className="homepage-art">
                 <div className="nav-logo">
                     <Link to="/">
-                        <img src={LendsqrLogo} alt="Logo" className="logo-img" />
+                        {/* <img src={LendsqrLogo} alt="Logo" className="logo-img" /> */}
+                        <NavLogo />
                     </Link>
                 </div> 
                 <div className="artwork-img-cont">

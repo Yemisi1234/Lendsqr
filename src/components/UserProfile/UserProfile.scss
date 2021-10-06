@@ -183,3 +183,56 @@
     text-decoration: none;
 }
 
+.page-control {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-filter {
+
+    &-text {
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        color: $color-secondary;
+    }
+
+    &-dropdown {
+        margin: 0 .3rem;
+    }
+}
+
+.page-num {
+    display: flex;
+    
+    &-control {
+        height: 25px;
+        width: 25px;
+        font-size: 1rem;
+        border-radius: 5px;
+        background-color: rgba($color-secondary, .07);
+        color: $color-secondary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 .2rem;
+        cursor: pointer;
+    }
+
+    &-number {
+        height: 25px;
+        width: 25px;
+        font-size: .83rem;
+        border-radius: 5px;
+        background-color: transparent;
+        color: $color-secondary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 .2rem;
+        cursor: pointer;
+    }
+}
+
