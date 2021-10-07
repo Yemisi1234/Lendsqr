@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.scss';
 // import LendsqrLogo from '../../images/lendsqr-logo.png';
@@ -9,10 +9,28 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import { NavLogo } from '../../images/icons';
 
 const Navbar = () => {
-    const handleSearch = (e) => {
-        e.preventDefault();
-    }
+
+    // const [searchQuery, setSearchQuery] = useState('')
     
+    // const handleSearch = (e) => {
+    //     e.preventDefault();
+    //     const filterSearch = (arr, query) => {
+    //         return data = arr.filter(el => el.indexOf(query) !== -1)
+    //     }
+    //     filterSearch(data, searchQuery)
+    // }
+
+    // const handleSearchInput = (e) => {
+    //     setSearchQuery(e.target.value)
+    // }
+
+    // // const handleSearch  = () => {
+    // // }
+
+    // useEffect(() => {
+    //     handleSearch();
+    // }, [searchQuery]) 
+
     return (
         <div>
             <div className="nav-container">
@@ -25,7 +43,7 @@ const Navbar = () => {
                 <div className="search-box">
                     <form action="submit" className="input-container">
                         <input type="text" className='search-input' placeholder="Search for anything" />
-                        <button className="search-button" onClick={handleSearch}><IoSearch className="search-icon" /></button>
+                        <button className="search-button" onClick={(e) => e.preventDefault()}><IoSearch className="search-icon" /></button>
                     </form>
                 </div>
                 <div className="user-nav">
