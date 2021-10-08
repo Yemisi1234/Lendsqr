@@ -67,8 +67,9 @@ const UserProfile = () => {
         {value: index, label: status.toUpperCase(), name: "status"}
     ))
 
-    const handleReset = () => {
-        
+    const handleReset = (e) => {
+        e.preventDefault()
+        document.getElementById("filter-form").reset()
     }
 
     const newData = (arr, criteria) => {
@@ -176,7 +177,8 @@ const UserProfile = () => {
                             ))
                         }
                         <div className={toggleFilter ? "users-list-filter active" : "users-list-filter"}>
-                            <label htmlFor="organization" className="filter-label">Organization</label>
+                            <form id="filter-form">
+                            <h5 htmlFor="organization" className="filter-label">Organization</h5>
                             <Select 
                                 name="organization"
                                 className="filter-dropdown"
@@ -185,15 +187,15 @@ const UserProfile = () => {
                                 placeholder="Select"
                                 onChange={handleSelect}
                             />
-                            <label htmlFor="username" className="filter-label">Username</label>
+                            <h5 htmlFor="username" className="filter-label">Username</h5>
                             <input name="username" type="text" className="filter-input" placeholder="User" onChange={handleInput} />   
-                            <label htmlFor="email" className="filter-label">Email</label>
+                            <h5 htmlFor="email" className="filter-label">Email</h5>
                             <input name="email" type="email" className="filter-input" placeholder="Email" onChange={handleInput} />   
-                            <label htmlFor="date" className="filter-label">Date</label>
+                            <h5 htmlFor="date" className="filter-label">Date</h5>
                             <input name="date" type="date" className="filter-input" placeholder="Date" onChange={handleInput} />   
-                            <label htmlFor="phone" className="filter-label">Phone Number</label>
+                            <h5 htmlFor="phone" className="filter-label">Phone Number</h5>
                             <input name="phone" type="text" className="filter-input" placeholder="Phone Number" onChange={handleInput} />   
-                            <label htmlFor="status" className="filter-label">Status</label>
+                            <h5 htmlFor="status" className="filter-label">Status</h5>
                             <Select 
                                 name="status"
                                 className="filter-dropdown"
@@ -206,7 +208,8 @@ const UserProfile = () => {
                                 <button className="filter-button-outline" onClick={handleReset}>Reset</button>    
                                 {/* <button className="filter-button-solid" onClick={handleFilter}>Filter</button>     */}
                                 <button className="filter-button-solid" onClick={handleFilter}>Filter</button>    
-                            </div>   
+                            </div> 
+                            </form>  
                         </div>
                     </div>
                 </div>
