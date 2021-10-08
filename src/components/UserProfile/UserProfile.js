@@ -14,7 +14,9 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
 
 const UserProfile = () => {
-    let data = require('../../db.json')
+    // let data = require('../../db.json')
+    const [data, setData] = useState(require('../../db3.json'));
+    const [filteredData, setFilteredData] = useState(data)
 
     const userStatus = ["active", "pending", "inactive", "blacklisted"]
 
@@ -25,11 +27,11 @@ const UserProfile = () => {
         username: '',
         email: '',
         date: '',
-        phoneNumber: '',
+        phone: '',
         status: ''
     });
 
-    const [searchQuery, setSearchQuery] = useState('')
+    const [pageItemsCount, setPageItemsCount] = useState('10')
 
     const handleInput = (e) => {
         const {name, value} = e.target
@@ -40,6 +42,8 @@ const UserProfile = () => {
         const {name, value} = e
         setFilterState({...filterState, [name]: value})
     }
+
+    console.log(filterState)
 
     const handleToggleFilter = () => {
         setToggleFilter(!toggleFilter);
@@ -59,28 +63,59 @@ const UserProfile = () => {
         {value: data.company, label: data.company, name: "organization"}
     ))
 
-    const options3 = userStatus.map(status => (
-        {value: status.toUpperCase(), label: status.toUpperCase(), name: "status"}
+    const options3 = userStatus.map((status, index) => (
+        {value: index, label: status.toUpperCase(), name: "status"}
     ))
 
     const handleReset = () => {
         
     }
 
+    const newData = (arr, criteria) => {
+        return arr.filter((obj) => {
+            return Object.keys(criteria).every(key => {
+                return obj[key] == criteria[key];
+            })
+        })
+    }
+
+    const criteriaObj = { 
+        // company: filterState.organization,
+        // firstName: filterState.username,
+        // email: filterState.email,
+        // phone: filterState.phone,
+        status: filterState.status,
+    }
+
+
     const handleFilter = () => {
-        setToggleFilter(false)
+        setToggleFilter(false);
+        // const filter = 'email'
+        // setData([data.filter((obj) => obj[filter] === filterState.username)])
+        // const newData = data.filter((obj) => obj[filter] === filterState.email)
+        
+        // newData(data, { status: 0, username: 'Hart' })
+        // setData(newData)
+        const filteredDataArr = newData(data, criteriaObj)
+        setFilteredData(filteredDataArr)
+        console.log(filteredDataArr)
+        console.log(data)
+    }
+
+    const handleItemsCount = (e) => {
+        setPageItemsCount(e.value)
     }
 
     // const handleSearchInput = (e) => {
     //     setFilterState({organization: e.target.value})
     // }
 
-    const handleSearch  = () => {
-        const filterSearch = (arr, query) => {
-            return data = arr.filter(el => el.username.indexOf(query) !== -1)
-        }
-        filterSearch(data, filterState.organization)
-    }
+    // const handleSearch  = () => {
+    //     const filterSearch = (arr, query) => {
+    //         return data = arr.filter(el => el.username.indexOf(query) !== -1)
+    //     }
+    //     filterSearch(data, filterState.organization)
+    // }
 
     // useEffect(() => {
     //     handleSearch();
@@ -125,7 +160,8 @@ const UserProfile = () => {
                             <h4 className="table-title">status <MdFilterList className="table-title-icon" onClick={handleToggleFilter} /></h4>
                         </div>
                         {
-                            data.slice(0, 9).map(data => (
+                            // data.slice(0, 9).map(data => (
+                            filteredData.slice(0, pageItemsCount).map(data => (
                                 <Link to={`/user/${data.id}`} className="user-details-link">
                                 <div className="user-info-row">
                                     <p className="user-info">{data.company}</p>
@@ -169,7 +205,7 @@ const UserProfile = () => {
                             <div className="filter-buttons-container">
                                 <button className="filter-button-outline" onClick={handleReset}>Reset</button>    
                                 {/* <button className="filter-button-solid" onClick={handleFilter}>Filter</button>     */}
-                                <button className="filter-button-solid" onClick={handleSearch}>Filter</button>    
+                                <button className="filter-button-solid" onClick={handleFilter}>Filter</button>    
                             </div>   
                         </div>
                     </div>
@@ -182,13 +218,14 @@ const UserProfile = () => {
                                 <Select 
                                     name="filterCount"
                                     options={options}
-                                    defaultValue={{value: "100", label: "100"}}
+                                    defaultValue={{value: "10", label: "10"}}
                                     styles={pageFilterStyles}
                                     className="page-filter-dropdown-menu"
+                                    onChange={handleItemsCount}
                                     placeholder=""
                                 />
                             </span>
-                            out of 100 
+                            out of {data.length} 
                         </h5>
                     </div>
                     <div className="page-num-container">
