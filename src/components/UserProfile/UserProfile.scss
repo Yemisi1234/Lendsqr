@@ -229,12 +229,29 @@
         font-size: .83rem;
         border-radius: 5px;
         background-color: transparent;
-        color: $color-secondary;
+        color: rgba($color-secondary, .7);
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 .2rem;
         cursor: pointer;
+
+        &:hover,&.active {
+            color: $color-secondary;
+        }
+    }
+
+    &-dot {
+        height: 25px;
+        width: 25px;
+        font-size: .83rem;
+        border-radius: 5px;
+        background-color: transparent;
+        color: $color-secondary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 .2rem;
     }
 }
 

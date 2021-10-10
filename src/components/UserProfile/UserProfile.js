@@ -11,6 +11,7 @@ import Navbar from '../Navbar/Navbar';
 import Select, { components } from 'react-select';
 import { listFilterStyles, pageFilterStyles } from '../dropdownStyles';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { CoinStackOutline, GroupUsersOutline, UsersLoan, UsersOutline } from '../../images/icons';
 
 
 const UserProfile = () => {
@@ -28,7 +29,7 @@ const UserProfile = () => {
         email: '',
         date: '',
         phone: '',
-        status: ''
+        status: '0'
     });
 
     const [pageItemsCount, setPageItemsCount] = useState('10')
@@ -56,7 +57,6 @@ const UserProfile = () => {
         {value: 100, label: "100"}, 
         {value: 200, label: "200"}, 
         {value: 400, label: "400"}, 
-        {value: 500, label: "500"}, 
     ]
 
     const options2 = data.map(data => (
@@ -89,8 +89,9 @@ const UserProfile = () => {
     }
 
 
-    const handleFilter = () => {
+    const handleFilter = (e) => {
         setToggleFilter(false);
+        e.preventDefault()
         // const filter = 'email'
         // setData([data.filter((obj) => obj[filter] === filterState.username)])
         // const newData = data.filter((obj) => obj[filter] === filterState.email)
@@ -130,22 +131,22 @@ const UserProfile = () => {
                 <h1 className="user-main-header">Users</h1>
                 <div className="users-div">
                     <div className="users">
-                        <div className="users-icon-bg"><FiUsers className="users-icon" /></div>
+                        <div className="users-icon-bg"><UsersOutline className="users-icon" /></div>
                         <h4 className="users-text">users</h4>
                         <h2 className="users-count">2,453</h2>
                     </div>
                     <div className="users">
-                        <div className="active-u-bg"><FiUsers className="active-u-icon" /></div>
+                        <div className="active-u-bg"><GroupUsersOutline className="active-u-icon" /></div>
                         <h4 className="users-text">active users</h4>
                         <h2 className="users-count">2,453</h2>
                     </div>
                     <div className="users">
-                        <div className="users-wl-bg"><AiOutlineFileText className="users-wl-icon" /></div>
+                        <div className="users-wl-bg"><UsersLoan className="users-wl-icon" /></div>
                         <h4 className="users-text">users with loans</h4>
                         <h2 className="users-count">12,453</h2>
                     </div>
                     <div className="users">
-                        <div className="users-ws-bg"><BiCoinStack className="users-ws-icon" /></div>
+                        <div className="users-ws-bg"><CoinStackOutline className="users-ws-icon" /></div>
                         <h4 className="users-text">users with savings</h4>
                         <h2 className="users-count">102,453</h2>
                     </div>
@@ -237,9 +238,9 @@ const UserProfile = () => {
                             <div className="page-num-number">1</div>
                             <div className="page-num-number">2</div>
                             <div className="page-num-number">3</div>
-                            <div className="page-num-number">...</div>
-                            <div className="page-num-number">15</div>
-                            <div className="page-num-number">16</div>
+                            <div className="page-num-dot">...</div>
+                            <div className="page-num-number">{data.length/10 - 1}</div>
+                            <div className="page-num-number">{data.length/10}</div>
                             <div className="page-num-control"><RiArrowRightSLine /></div>
                         </div>
                     </div>
