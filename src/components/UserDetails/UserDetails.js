@@ -10,7 +10,7 @@ import Navbar from '../Navbar/Navbar';
 
 const UserDetails = () => {
     // const data = require('../../db.json')
-    const data = require('../../db2.json')
+    const data = require('../../db3.json')
 
     const userId = useParams()
     console.log(userId.id)

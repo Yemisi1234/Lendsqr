@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './UserProfile.scss';
-import {FiUsers} from 'react-icons/fi';
-import {BiCoinStack} from 'react-icons/bi';
-import {AiOutlineFileText} from 'react-icons/ai';
 import {MdFilterList,} from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import {Status} from '../Status/Status';
@@ -17,7 +14,10 @@ import { CoinStackOutline, GroupUsersOutline, UsersLoan, UsersOutline } from '..
 const UserProfile = () => {
     // let data = require('../../db.json')
     const [data, setData] = useState(require('../../db3.json'));
-    const [filteredData, setFilteredData] = useState(data)
+
+    const [filteredData, setFilteredData] = useState(data);
+
+    const userRef = useRef(null);
 
     const userStatus = ["active", "pending", "inactive", "blacklisted"]
 
@@ -54,9 +54,9 @@ const UserProfile = () => {
         {value: 10, label: "10"}, 
         {value: 20, label: "20"}, 
         {value: 50, label: "50"}, 
-        {value: 100, label: "100"}, 
-        {value: 200, label: "200"}, 
-        {value: 400, label: "400"}, 
+        // {value: 100, label: "100"}, 
+        // {value: 200, label: "200"}, 
+        // {value: 400, label: "400"}, 
     ]
 
     const options2 = data.map(data => (
@@ -81,10 +81,10 @@ const UserProfile = () => {
     }
 
     const criteriaObj = { 
-        // company: filterState.organization,
-        // firstName: filterState.username,
-        // email: filterState.email,
-        // phone: filterState.phone,
+        company: filterState.organization,
+        firstName: filterState.username,
+        email: filterState.email,
+        phone: filterState.phone,
         status: filterState.status,
     }
 
@@ -171,7 +171,6 @@ const UserProfile = () => {
                                     <p className="user-info">{data.email}</p>
                                     <p className="user-info">{data.phone}</p>
                                     <p className="user-info">May 15, 2020 10:00 AM</p>
-                                    {/* <Status status="active" /> */}
                                     <Status status={userStatus[data.status]} />
                                 </div>
                                 </Link>
@@ -239,8 +238,8 @@ const UserProfile = () => {
                             <div className="page-num-number">2</div>
                             <div className="page-num-number">3</div>
                             <div className="page-num-dot">...</div>
-                            <div className="page-num-number">{data.length/10 - 1}</div>
-                            <div className="page-num-number">{data.length/10}</div>
+                            <div className="page-num-number">{data.length/pageItemsCount - 1}</div>
+                            <div className="page-num-number">{data.length/pageItemsCount}</div>
                             <div className="page-num-control"><RiArrowRightSLine /></div>
                         </div>
                     </div>

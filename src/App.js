@@ -9,12 +9,13 @@ import ScrollToTop from './components/ScrollToTop';
 
 function App() {
 
-  const mockData = require('../src/db2.json')
+  const mockData = require('../src/db.json')
+
 
   const IDB = (function init() {
     let db = null;
     let objectStore = null;
-    let DBOpenReq = indexedDB.open('UsersDB', 3)
+    let DBOpenReq = indexedDB.open('UsersDB', 5)
 
     DBOpenReq.addEventListener('error', (err) => {
       
@@ -23,30 +24,35 @@ function App() {
     DBOpenReq.addEventListener('success', (ev) => {
 
       db = ev.target.result;
-      const addUser = () => {
-        let tx = db.transaction('usersStore', 'readwrite');
-        tx.oncomplete = (ev) => {
-  
-        }
-        tx.onerror = (ev) => {
-  
-        }
-        let store = tx.objectStore('usersStore');
-        let request = mockData.map(user => (
-          store.add(user)
-        ))
-  
-        request.onsuccess = (ev) => {
-          console.log('successfully added an object')
-        }
-        request.onerror = (ev) => {
-          console.log('error in request to add')
-        }
-      }
-      addUser();
-      // const getReq = store.getAll()
-      // console.log(getReq)
       console.log('success', db)
+      if (typeof mockData !== 'undefined') {
+        let tx = makeTX('usersStore', 'readwrite');
+        tx.oncomplete = (ev) => {
+          console.log('finished adding the data');
+          builList()
+        }
+        let store = tx.objectStore('usersStore')
+        let request = store.getAll();
+        // to delete data from store, we use
+        // let request = store.delete .deleteIndex or .clear() for all
+        request.onsuccess = (ev) => {
+          if(ev.target.result.length === 0) {
+            // or ev.target.length !== mockData.length
+            mockData.forEach(obj => {
+              let req = store.add(obj)
+              req.onsuccess = (ev) => {
+                console.log('added an object')
+              }
+              // tx.abort() if you want to kill a transaction
+              req.onerror = (err) => {
+                console.warn(err);
+              }
+            })
+          }
+        }
+      } else {
+        builList()
+      }
     });
     DBOpenReq.addEventListener('upgradeneeded', (ev) => {
 
@@ -56,15 +62,33 @@ function App() {
           keyPath: 'id',
         })
       }
-
       
       console.log('upgrade', db)
     });
 
-    
+    const builList = () => {
+      let tx = makeTX('usersStore', 'readonly')
+      let store = tx.objectStore('usersStore');
+      let getReq = store.getAll();
+      getReq.onsuccess = (ev) => {
+        let request = ev.target; // request is the same as getReq
+        console.log({request});
+      }
+    }
 
+    const makeTX = (storeName, mode) => {
+      let tx = db.transaction(storeName, mode);
+
+      return tx;
+    }
 
   })();
+
+  async function dbData() {
+    let data = await IDB();
+    console.log(data)
+  }
+
 
   return (
     <Router>

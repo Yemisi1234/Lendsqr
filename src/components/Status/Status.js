@@ -10,10 +10,15 @@ export const Status = (props) => {
         case 'blacklisted':
             return (
                 <div className="status-container">
-                     <div className="status-bg-red">
+                    <div className="status-bg-red">
                          <p className="status-text-red">Blacklisted</p>
                      </div>
                      <HiOutlineDotsVertical className="status-menu" />
+                     {/* <div className="status-dropdown">
+                         <li className="status-dropdown-status"><IoEyeOutline className="status-icon" /> View Details</li>
+                         <li className="status-dropdown-status"><BsPersonX className="status-icon" /> Blacklist User</li>
+                         <li className="status-dropdown-status"><BsPersonCheck className="status-icon" /> Activate User</li>
+                     </div> */}
                 </div>
             )
         case 'active': 
