@@ -11,7 +11,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { CoinStackOutline, GroupUsersOutline, UsersLoan, UsersOutline } from '../../images/icons';
 // import Pagination from '@material-ui/lab/Pagination';
 // import Stack from '@mui/material/Stack';
-import Pagination from '../Pagination';
+// import Pagination from '../Pagination';
 
 
 const UserProfile = () => {
@@ -167,7 +167,6 @@ const UserProfile = () => {
                             <h4 className="table-title">status <MdFilterList className="table-title-icon" onClick={handleToggleFilter} /></h4>
                         </div>
                         {
-                            // data.slice(0, 9).map(data => (
                             currentUsers.map(data => (
                                 <Link to={`/user/${data.id}`} className="user-details-link">
                                 <div className="user-info-row" key={data.id}>
@@ -211,7 +210,6 @@ const UserProfile = () => {
                             />
                             <div className="filter-buttons-container">
                                 <button className="filter-button-outline" onClick={handleReset}>Reset</button>    
-                                {/* <button className="filter-button-solid" onClick={handleFilter}>Filter</button>     */}
                                 <button className="filter-button-solid" onClick={handleFilter}>Filter</button>    
                             </div> 
                             </form>  
