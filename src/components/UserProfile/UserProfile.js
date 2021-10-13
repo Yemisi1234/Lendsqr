@@ -9,11 +9,14 @@ import Select, { components } from 'react-select';
 import { listFilterStyles, pageFilterStyles } from '../dropdownStyles';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { CoinStackOutline, GroupUsersOutline, UsersLoan, UsersOutline } from '../../images/icons';
+// import Pagination from '@material-ui/lab/Pagination';
+// import Stack from '@mui/material/Stack';
+import Pagination from '../Pagination';
 
 
 const UserProfile = () => {
     // let data = require('../../db.json')
-    const [data, setData] = useState(require('../../db3.json'));
+    const data = require('../../db3.json');
 
     const [filteredData, setFilteredData] = useState(data);
 
@@ -32,7 +35,18 @@ const UserProfile = () => {
         status: '0'
     });
 
-    const [pageItemsCount, setPageItemsCount] = useState('10')
+
+
+    const noOfPages = data.length/10
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [usersPerPage] = useState(10);
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser)
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    }
 
     const handleInput = (e) => {
         const {name, value} = e.target
@@ -54,9 +68,9 @@ const UserProfile = () => {
         {value: 10, label: "10"}, 
         {value: 20, label: "20"}, 
         {value: 50, label: "50"}, 
-        // {value: 100, label: "100"}, 
-        // {value: 200, label: "200"}, 
-        // {value: 400, label: "400"}, 
+        {value: 100, label: "100"}, 
+        {value: 200, label: "200"}, 
+        {value: 400, label: "400"}, 
     ]
 
     const options2 = data.map(data => (
@@ -105,23 +119,14 @@ const UserProfile = () => {
     }
 
     const handleItemsCount = (e) => {
-        setPageItemsCount(e.value)
+        setFilteredData(data.slice(0, e.value))
     }
+    console.log(filteredData)
 
-    // const handleSearchInput = (e) => {
-    //     setFilterState({organization: e.target.value})
-    // }
-
-    // const handleSearch  = () => {
-    //     const filterSearch = (arr, query) => {
-    //         return data = arr.filter(el => el.username.indexOf(query) !== -1)
-    //     }
-    //     filterSearch(data, filterState.organization)
-    // }
-
-    // useEffect(() => {
-    //     handleSearch();
-    // }, [filterState.organization])
+    const handlePageRender = (e) => {
+        const {innerText} = e.target
+        setCurrentPage(parseInt(innerText))
+    }
 
     return (
         <div className="userprofile">
@@ -163,9 +168,9 @@ const UserProfile = () => {
                         </div>
                         {
                             // data.slice(0, 9).map(data => (
-                            filteredData.slice(0, pageItemsCount).map(data => (
+                            currentUsers.map(data => (
                                 <Link to={`/user/${data.id}`} className="user-details-link">
-                                <div className="user-info-row">
+                                <div className="user-info-row" key={data.id}>
                                     <p className="user-info">{data.company}</p>
                                     <p className="user-info">{data.firstName}</p>
                                     <p className="user-info">{data.email}</p>
@@ -221,7 +226,7 @@ const UserProfile = () => {
                                 <Select 
                                     name="filterCount"
                                     options={options}
-                                    defaultValue={{value: "10", label: "10"}}
+                                    defaultValue={{value: "400", label: "400"}}
                                     styles={pageFilterStyles}
                                     className="page-filter-dropdown-menu"
                                     onChange={handleItemsCount}
@@ -234,16 +239,32 @@ const UserProfile = () => {
                     <div className="page-num-container">
                         <div className="page-num">
                             <div className="page-num-control"><RiArrowLeftSLine /></div>
-                            <div className="page-num-number">1</div>
-                            <div className="page-num-number">2</div>
-                            <div className="page-num-number">3</div>
+                            <div className={`page-num-number`} onClick={handlePageRender}>1</div>
+                            <div className={`page-num-number`} onClick={handlePageRender}>2</div>
+                            <div className={`page-num-number`} onClick={handlePageRender}>3</div>
                             <div className="page-num-dot">...</div>
-                            <div className="page-num-number">{data.length/pageItemsCount - 1}</div>
-                            <div className="page-num-number">{data.length/pageItemsCount}</div>
+                            <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages - 1}</div>
+                            <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages}</div>
                             <div className="page-num-control"><RiArrowRightSLine /></div>
                         </div>
                     </div>
+                    {/* <div>
+                        <Pagination 
+                            usersPerPage={usersPerPage}
+                            totalUsers={data.length}
+                            count={noOfPages} 
+                            size='small'
+                            //https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
+                        />
+                    </div> */}
                 </div>
+                    {/* <div>
+                        <Pagination 
+                            usersPerPage={usersPerPage}
+                            totalUsers={data.length}
+                            paginate={paginate}
+                        />
+                    </div> */}
             </div>
         </div>
     )

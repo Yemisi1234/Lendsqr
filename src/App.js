@@ -81,7 +81,6 @@ function App() {
 
       return tx;
     }
-
   })();
 
   async function dbData() {
