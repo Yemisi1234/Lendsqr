@@ -38,14 +38,37 @@ const UserProfile = () => {
 
 
     const noOfPages = data.length/10
-
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage] = useState(10);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser)
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber)
+    // const paginate = (pageNumber) => {
+    //     setCurrentPage(pageNumber)
+    // }
+
+    let pageNumbers = []
+    for (let i = 1; i <= noOfPages; i++) {
+        pageNumbers.push(i)
+    }
+
+    const [currentDisPages, setCurrentDisPages] = useState(1);
+    const [pagesPerRender] = useState(3);
+    const thirdRendPage = currentDisPages * pagesPerRender;
+    const firstRendPage = thirdRendPage - pagesPerRender
+    const currentThreePages = pageNumbers.slice(firstRendPage, thirdRendPage)
+    console.log(thirdRendPage)
+
+    const handleNextRendPages = () => {
+        if (thirdRendPage !== 39) {
+            setCurrentDisPages(prevRender => prevRender + 1)
+        }
+    }
+
+    const handlePrevRendPages = () => {
+        if (currentDisPages !== 1) {
+            setCurrentDisPages(prevRender => prevRender - 1)
+        }
     }
 
     const handleInput = (e) => {
@@ -67,6 +90,7 @@ const UserProfile = () => {
     const options = [
         {value: 10, label: "10"}, 
         {value: 20, label: "20"}, 
+        // {value: 30, label: "30"}, 
         {value: 50, label: "50"}, 
         {value: 100, label: "100"}, 
         {value: 200, label: "200"}, 
@@ -121,7 +145,6 @@ const UserProfile = () => {
     const handleItemsCount = (e) => {
         setFilteredData(data.slice(0, e.value))
     }
-    console.log(filteredData)
 
     const handlePageRender = (e) => {
         const {innerText} = e.target
@@ -235,19 +258,22 @@ const UserProfile = () => {
                     </div>
                     <div className="page-num-container">
                         <div className="page-num">
-                            <div className="page-num-control"><RiArrowLeftSLine /></div>
-                            <div className={`page-num-number`} onClick={handlePageRender}>1</div>
-                            <div className={`page-num-number`} onClick={handlePageRender}>2</div>
+                            <div className="page-num-control"><RiArrowLeftSLine onClick={handlePrevRendPages} /></div>
+                            {
+                                currentThreePages.map(page => (
+                                    <div className={`page-num-number`} onClick={handlePageRender}>{page}</div> 
+                                ))
+                            }
                             {
                                 filteredData.length >= 30 && 
                                 <>
-                                <div className={`page-num-number`} onClick={handlePageRender}>3</div>
+                                {/* <div className={`page-num-number`} onClick={handlePageRender}>3</div> */}
                                 <div className="page-num-dot">...</div>
                                 <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages - 1}</div>
                                 <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages}</div>
                                 </>
                             }
-                            <div className="page-num-control"><RiArrowRightSLine /></div>
+                            <div className="page-num-control"><RiArrowRightSLine onClick={handleNextRendPages} /></div>
                         </div>
                     </div>
                     {/* <div>
