@@ -56,7 +56,7 @@ const Sidebar = () => {
                 </ul>
             </div>
             <ul>
-                <li className="side-item"><Link to="/" className="side-link"><Logout className="side-icon" /> Logout</Link></li>    
+                <li className="side-item"><Link to="/" className="side-link"><Logout className="side-icon" /><span className="sidebar-header-text">Logout</span></Link></li>    
             </ul>
         </div>
     )

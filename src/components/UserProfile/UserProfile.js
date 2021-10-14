@@ -168,16 +168,15 @@ const UserProfile = () => {
                         </div>
                         {
                             currentUsers.map(data => (
-                                <Link to={`/user/${data.id}`} className="user-details-link">
+                                // <Link to={`/user/${data.id}`} className="user-details-link">
                                 <div className="user-info-row" key={data.id}>
                                     <p className="user-info">{data.company}</p>
                                     <p className="user-info">{data.firstName}</p>
                                     <p className="user-info">{data.email}</p>
                                     <p className="user-info">{data.phone}</p>
                                     <p className="user-info">May 15, 2020 10:00 AM</p>
-                                    <Status status={userStatus[data.status]} />
+                                    <Status status={userStatus[data.status]} id={data.id} />
                                 </div>
-                                </Link>
                             ))
                         }
                         <div className={toggleFilter ? "users-list-filter active" : "users-list-filter"}>
@@ -239,10 +238,15 @@ const UserProfile = () => {
                             <div className="page-num-control"><RiArrowLeftSLine /></div>
                             <div className={`page-num-number`} onClick={handlePageRender}>1</div>
                             <div className={`page-num-number`} onClick={handlePageRender}>2</div>
-                            <div className={`page-num-number`} onClick={handlePageRender}>3</div>
-                            <div className="page-num-dot">...</div>
-                            <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages - 1}</div>
-                            <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages}</div>
+                            {
+                                filteredData.length >= 30 && 
+                                <>
+                                <div className={`page-num-number`} onClick={handlePageRender}>3</div>
+                                <div className="page-num-dot">...</div>
+                                <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages - 1}</div>
+                                <div className={`page-num-number`} onClick={handlePageRender}>{noOfPages}</div>
+                                </>
+                            }
                             <div className="page-num-control"><RiArrowRightSLine /></div>
                         </div>
                     </div>

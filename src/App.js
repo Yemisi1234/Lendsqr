@@ -91,12 +91,10 @@ function App() {
 
   return (
     <Router>
-        {/* <Sidebar /> */}
       <Switch>
         <ScrollToTop>
           <Route exact path="/" component={Signin}></Route>
           <Route path="/users" component={UserProfile} />
-          {/* <Route path="/user-details" component={UserDetails} /> */}
           <Route path="/user/:id" component={UserDetails} />
         </ScrollToTop>
       </Switch>
