@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import Sidebar from './components/Sidebar/Sidebar';
@@ -11,7 +11,8 @@ function App() {
 
   const mockData = require('../src/db.json')
 
-
+  const [request, setRequest] = useState()
+  
   const IDB = (function init() {
     let db = null;
     let objectStore = null;
@@ -42,6 +43,7 @@ function App() {
               let req = store.add(obj)
               req.onsuccess = (ev) => {
                 console.log('added an object')
+                console.log(store)
               }
               // tx.abort() if you want to kill a transaction
               req.onerror = (err) => {
@@ -72,7 +74,7 @@ function App() {
       let getReq = store.getAll();
       getReq.onsuccess = (ev) => {
         let request = ev.target; // request is the same as getReq
-        console.log({request});
+        setRequest(request.result)
       }
     }
 
@@ -81,12 +83,12 @@ function App() {
 
       return tx;
     }
-  })();
+  });
 
-  async function dbData() {
-    let data = await IDB();
-    console.log(data)
-  }
+  useEffect(() => {
+    IDB()
+  }, [])
+
 
 
   return (

@@ -16,7 +16,7 @@ import { CoinStackOutline, GroupUsersOutline, UsersLoan, UsersOutline } from '..
 
 const UserProfile = () => {
     // let data = require('../../db.json')
-    const data = require('../../db3.json');
+    const data = require('../../db.json');
 
     const [filteredData, setFilteredData] = useState(data);
 
@@ -32,7 +32,7 @@ const UserProfile = () => {
         email: '',
         date: '',
         phone: '',
-        status: '0'
+        status: ''
     });
 
 
@@ -89,8 +89,8 @@ const UserProfile = () => {
 
     const options = [
         {value: 10, label: "10"}, 
-        {value: 20, label: "20"}, 
-        // {value: 30, label: "30"}, 
+        // {value: 20, label: "20"}, 
+        {value: 30, label: "30"}, 
         {value: 50, label: "50"}, 
         {value: 100, label: "100"}, 
         {value: 200, label: "200"}, 
@@ -110,10 +110,18 @@ const UserProfile = () => {
         document.getElementById("filter-form").reset()
     }
 
+    // const newData = (arr, criteria) => {
+    //     return arr.filter((obj) => {
+    //         return Object.keys(criteria).every(key => {
+    //             return obj[key] == criteria[key];
+    //         })
+    //     })
+    // }
+
     const newData = (arr, criteria) => {
         return arr.filter((obj) => {
-            return Object.keys(criteria).every(key => {
-                return obj[key] == criteria[key];
+            return Object.keys(criteria).filter(key => criteria[key] !== "").some(key => {
+                return obj[key].toLowerCase() == criteria[key].toLowerCase();
             })
         })
     }
@@ -265,7 +273,7 @@ const UserProfile = () => {
                                 ))
                             }
                             {
-                                filteredData.length >= 30 && 
+                                filteredData.length > 30 && 
                                 <>
                                 {/* <div className={`page-num-number`} onClick={handlePageRender}>3</div> */}
                                 <div className="page-num-dot">...</div>
