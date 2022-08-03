@@ -30,26 +30,14 @@
     width: 20rem;
     height: 2.7rem;
     outline: none;
-
+    position: relative;
     &::placeholder {
         color: #d3d9e5;
     }
 }
 
-.search-button {
-    background-color: $color-primary;
-    padding: .8rem;
-    height: 2.7rem;
-    width: 3.5rem;
-    border: 1px solid $color-primary;
-    color: $color-white;
-    margin-left: -.5rem;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+button{
+    margin-left: 0;
 }
 
 .search-icon {

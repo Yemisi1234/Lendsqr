@@ -1,95 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import Sidebar from './components/Sidebar/Sidebar';
-import UserProfile from './components/UserProfile/UserProfile';
-import UserDetails from './components/UserDetails/UserDetails';
-import Signin from './components/Signin/Signin';
-import ScrollToTop from './components/ScrollToTop';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserProfile from "./components/UserProfile/UserProfile";
+import UserDetails from "./components/UserDetails/UserDetails";
+import Signin from "./components/Signin/Signin";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
+  const mockData = require("../src/db.json");
 
-  const mockData = require('../src/db.json')
+  const [request, setRequest] = useState();
 
-  const [request, setRequest] = useState()
-  
-  const IDB = (function init() {
+  const IDB = function init() {
     let db = null;
     let objectStore = null;
-    let DBOpenReq = indexedDB.open('UsersDB', 5)
+    let DBOpenReq = indexedDB.open("UsersDB", 5);
 
-    DBOpenReq.addEventListener('error', (err) => {
-      
+    DBOpenReq.addEventListener("error", (err) => {
       console.warn(err);
     });
-    DBOpenReq.addEventListener('success', (ev) => {
-
+    DBOpenReq.addEventListener("success", (ev) => {
       db = ev.target.result;
-      console.log('success', db)
-      if (typeof mockData !== 'undefined') {
-        let tx = makeTX('usersStore', 'readwrite');
+      console.log("success", db);
+      if (typeof mockData !== "undefined") {
+        let tx = makeTX("usersStore", "readwrite");
         tx.oncomplete = (ev) => {
-          console.log('finished adding the data');
-          builList()
-        }
-        let store = tx.objectStore('usersStore')
+          console.log("finished adding the data");
+          builList();
+        };
+        let store = tx.objectStore("usersStore");
         let request = store.getAll();
-        // to delete data from store, we use
-        // let request = store.delete .deleteIndex or .clear() for all
         request.onsuccess = (ev) => {
-          if(ev.target.result.length === 0) {
-            // or ev.target.length !== mockData.length
-            mockData.forEach(obj => {
-              let req = store.add(obj)
+          if (ev.target.result.length === 0) {
+            mockData.forEach((obj) => {
+              let req = store.add(obj);
               req.onsuccess = (ev) => {
-                console.log('added an object')
-                console.log(store)
-              }
-              // tx.abort() if you want to kill a transaction
+                console.log("added an object");
+                console.log(store);
+              };
               req.onerror = (err) => {
                 console.warn(err);
-              }
-            })
+              };
+            });
           }
-        }
+        };
       } else {
-        builList()
+        builList();
       }
     });
-    DBOpenReq.addEventListener('upgradeneeded', (ev) => {
-
+    DBOpenReq.addEventListener("upgradeneeded", (ev) => {
       db = ev.target.result;
-      if (!db.objectStoreNames.contains('usersStore')) {
-        objectStore = db.createObjectStore('usersStore', {
-          keyPath: 'id',
-        })
+      if (!db.objectStoreNames.contains("usersStore")) {
+        objectStore = db.createObjectStore("usersStore", {
+          keyPath: "id",
+        });
       }
-      
-      console.log('upgrade', db)
+
+      console.log("upgrade", db);
     });
 
     const builList = () => {
-      let tx = makeTX('usersStore', 'readonly')
-      let store = tx.objectStore('usersStore');
+      let tx = makeTX("usersStore", "readonly");
+      let store = tx.objectStore("usersStore");
       let getReq = store.getAll();
       getReq.onsuccess = (ev) => {
         let request = ev.target; // request is the same as getReq
-        setRequest(request.result)
-      }
-    }
+        setRequest(request.result);
+      };
+    };
 
     const makeTX = (storeName, mode) => {
       let tx = db.transaction(storeName, mode);
 
       return tx;
-    }
-  });
+    };
+  };
 
   useEffect(() => {
-    IDB()
-  }, [])
-
-
+    IDB();
+  }, []);
 
   return (
     <Router>

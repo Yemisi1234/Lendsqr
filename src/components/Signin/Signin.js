@@ -1,65 +1,33 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import './Signin.scss';
-import { Link } from 'react-router-dom';
-// import LendsqrLogo from '../../images/lendsqr-logo.png';
-import { NavLogo } from '../../images/icons';
-import Artwork from '../../images/artwork.png';
-
+import React, { useState } from "react";
+import { Pablo } from "../../Atoms/pablo";
+import { InputField } from "../../Atoms/InputField";
+import "./Signin.scss";
 const Signin = () => {
-    const [userEmail, setUserEmail] = useState('')
-    const [userPassword, setUserPassword] = useState('')
+  return (
+    <div className="container">
+      <Pablo />
+      <form className="form-content">
+        <header>Welcome!</header>
+        <p className="h_p">Enter details to login.</p>
+        <InputField
+          htmlFor="password"
+          label="Password"
+          name="password"
+          inputType="email"
+          placeholder=" Password"
+        />
+        <InputField
+          htmlFor="email"
+          label="email"
+          name="email"
+          inputType="email"
+          placeholder=" Email"
+        />
+        <p className="forgotpassword">forgot password?</p>
+        <button>LOG IN</button>
+      </form>
+    </div>
+  );
+};
 
-    const history = useHistory()
-
-    const handleEmailInput = (e) => {
-        const {name, value} = e.target.value;
-        setUserEmail({
-            [name]: value
-        })
-    }
-    
-    const handlePasswordInput = (e) => {
-        const {name, value} = e.target.value;
-        setUserPassword({
-            [name]: value
-        })
-    }
-
-    const handleSignin = (e) => {
-        e.preventDefault()
-        if (userEmail !== "" && userPassword !== "") {
-            history.push('/users')
-        }
-    }
-
-    return (
-        <div className="signin">
-            <div className="homepage-art">
-                <div className="nav-logo">
-                    <Link to="/">
-                        {/* <img src={LendsqrLogo} alt="Logo" className="logo-img" /> */}
-                        <NavLogo />
-                    </Link>
-                </div> 
-                <div className="artwork-img-cont">
-                    <img src={Artwork} alt="Artwork" className="artwork-img" />
-                </div>
-            </div>
-            <div className="homepage-signin">
-                <div className="signin-container">
-                    <h1 className="welcome">Welcome!</h1>
-                    <p className="enter-details">Enter details to login.</p>
-                    <form action="" className="signin-form">
-                        <input name="email" type="email" className="signin-input" placeholder="Email" onChange={handleEmailInput} />
-                        <input name="password" type="password" className="signin-input" placeholder="Password" onChange={handlePasswordInput} />
-                        <p className="forgot">Forgot Password?</p>
-                        <button className="signin-btn" onClick={handleSignin}>Log in</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default Signin
+export default Signin;
